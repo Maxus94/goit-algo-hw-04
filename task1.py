@@ -1,0 +1,73 @@
+import timeit
+import random
+
+def generate_list(num, max):
+    numbers = []
+    for _ in range(1,num):
+        numbers.append(random.randint(1, max))
+    return numbers
+
+
+def insertion_sort(lst):
+    for i in range(1, len(lst)):
+        key = lst[i]
+        j = i-1
+        while j >=0 and key < lst[j] :
+                lst[j+1] = lst[j]
+                j -= 1
+        lst[j+1] = key 
+    return lst
+
+def merge_sort(arr):
+    if len(arr) <= 1:
+        return arr
+
+    mid = len(arr) // 2
+    left_half = arr[:mid]
+    right_half = arr[mid:]
+
+    return merge(merge_sort(left_half), merge_sort(right_half))
+
+def merge(left, right):
+    merged = []
+    left_index = 0
+    right_index = 0
+
+    while left_index < len(left) and right_index < len(right):
+        if left[left_index] <= right[right_index]:
+            merged.append(left[left_index])
+            left_index += 1
+        else:
+            merged.append(right[right_index])
+            right_index += 1
+
+    while left_index < len(left):
+        merged.append(left[left_index])
+        left_index += 1
+
+    while right_index < len(right):
+        merged.append(right[right_index])
+        right_index += 1
+
+    return merged
+
+for i in range(1, 5):
+    print('\n'f"unsorted array of {10**(i+1)} numbers 1-{10**i}")
+    nums = generate_list(10**i, 100*i)
+    copy_nums1 = nums[:]
+    copy_nums2 = nums[:]
+    copy_nums3 = nums[:]
+    copy_nums4 = nums[:]
+    
+    print(timeit.timeit('copy_nums1.sort()', number=1, globals=globals()), " - sort")
+    print(timeit.timeit('sorted(copy_nums2)', number=1, globals=globals()), " - sorted")
+    print(timeit.timeit('insertion_sort(copy_nums3)', number=1, globals=globals()), " - insertion_sort")
+    print(timeit.timeit('merge_sort(copy_nums4)', number=1, globals=globals()), " - merge_sort")
+    
+    print('\n'f"sorted array of {10**(i+1)} numbers 1-{10**i}")
+
+    print(timeit.timeit('copy_nums1.sort()', number=1, globals=globals()), " - sort")
+    print(timeit.timeit('sorted(copy_nums1)', number=1, globals=globals()), " - sorted")
+    print(timeit.timeit('insertion_sort(copy_nums1)', number=1, globals=globals()), " - insertion_sort")
+    print(timeit.timeit('merge_sort(copy_nums1)', number=1, globals=globals()), " - merge_sort")
+
