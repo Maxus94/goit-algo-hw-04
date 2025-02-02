@@ -51,23 +51,23 @@ def merge(left, right):
 
     return merged
 
-for i in range(1, 5):
-    print('\n'f"unsorted array of {10**(i+1)} numbers 1-{10**i}")
-    nums = generate_list(10**i, 100*i)
-    copy_nums1 = nums[:]
-    copy_nums2 = nums[:]
-    copy_nums3 = nums[:]
-    copy_nums4 = nums[:]
+for i in range(0, 3):
     
-    print(timeit.timeit('copy_nums1.sort()', number=1, globals=globals()), " - sort")
-    print(timeit.timeit('sorted(copy_nums2)', number=1, globals=globals()), " - sorted")
-    print(timeit.timeit('insertion_sort(copy_nums3)', number=1, globals=globals()), " - insertion_sort")
-    print(timeit.timeit('merge_sort(copy_nums4)', number=1, globals=globals()), " - merge_sort")
+    nums = generate_list(10**(i+1), 10**(i+2))        
     
-    print('\n'f"sorted array of {10**(i+1)} numbers 1-{10**i}")
-
-    print(timeit.timeit('copy_nums1.sort()', number=1, globals=globals()), " - sort")
-    print(timeit.timeit('sorted(copy_nums1)', number=1, globals=globals()), " - sorted")
-    print(timeit.timeit('insertion_sort(copy_nums1)', number=1, globals=globals()), " - insertion_sort")
-    print(timeit.timeit('merge_sort(copy_nums1)', number=1, globals=globals()), " - merge_sort")
+    print('\n'f"unsorted array of {10**(i+1)} numbers 1-{10**(i+2)}")
+    
+    print(timeit.timeit('nums[:].sort()', number=1000, globals=globals()), " - sort")    
+    print(timeit.timeit('sorted(nums[:])', number=1000, globals=globals()), " - sorted")    
+    print(timeit.timeit('insertion_sort(nums[:])', number=1000, globals=globals()), " - insertion_sort")
+    print(timeit.timeit('merge_sort(nums[:])', number=1000, globals=globals()), " - merge_sort")    
+    
+    print('\n'f"sorted array of {10**(i+1)} numbers 1-{10**(i+2)}")    
+    
+    nums.sort()
+    
+    print(timeit.timeit('nums[:].sort()', number=1000, globals=globals()), " - sort")
+    print(timeit.timeit('sorted(nums[:])', number=1000, globals=globals()), " - sorted")
+    print(timeit.timeit('insertion_sort(nums[:])', number=1000, globals=globals()), " - insertion_sort")
+    print(timeit.timeit('merge_sort(nums[:])', number=1000, globals=globals()), " - merge_sort")
 
